@@ -1,5 +1,4 @@
 import os
-import requests
 import Adafruit_DHT
 import paho.mqtt.publish as publish
 
