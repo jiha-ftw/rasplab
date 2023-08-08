@@ -1,3 +1,5 @@
+import RPi.GPIO as GPIO
+import time
 import os
 import Adafruit_DHT
 import paho.mqtt.publish as publish
@@ -14,3 +16,38 @@ publish.single(
 		"password": os.getenv("RASPLAB_MOSQUITTO_USER_PASSWORD") 
 	}
 )
+
+GREEN_PIN = 19
+RED_PIN = 26
+SIGNAL_PIN = GREEN_PIN
+
+if temperature is None:
+	SIGNAL_PIN = RED_PIN
+else:
+	publish.single(
+	        "mqtt/collect-temperature",
+	        f"{{ \"Source\": {instance_id}, \"Temperature\": {temperature}, \"Humidity\": {humidity} }}",
+	        hostname = os.getenv("RASPLAB_MOSQUITTO_SERVER_IP"),
+	        auth = {
+	                "username": "mosquitto_user",
+	                "password": os.getenv("RASPLAB_MOSQUITTO_USER_PASSWORD")
+	        }
+	)
+
+try:
+	GPIO.setmode(GPIO.BCM)
+
+	GPIO.setwarnings(False)
+	GPIO.setup(SIGNAL_PIN, GPIO.OUT)
+
+	for i in range(1, 10):
+		GPIO.output(SIGNAL_PIN, GPIO.HIGH)
+		time.sleep(0.5)
+		GPIO.output(SIGNAL_PIN, GPIO.LOW)
+		time.sleep(0.5)
+
+	GPIO.cleanup()
+
+except KeyboardInterrupt:
+	GPIO.cleanup()
+
