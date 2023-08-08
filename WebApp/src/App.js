@@ -3,41 +3,47 @@ import './App.css';
 
 
 const App = () => {
-  const [data, setData] = useState({});
+  const [data, setData] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
+  const fetchWeatherData = () => {
+    setLoading(true);
     fetch(process.env.REACT_APP_API_URL)
       .then(response => response.json())
-      .then(data => setData(data))
-      .catch(error => console.log(error.message));
-  }, []);
+      .then(data => { setData(data); })
+      .catch(error => console.log(error.message))
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => fetchWeatherData(), []);
 
   return (<div className="App">
-    {Object.keys(data).length
-      ? <table>
+    {loading || data === null
+      ? <div className="spinner"><img src="loader.gif" alt="Loading..." /></div>
+      : <table>
         <thead>
           <tr>
             <th>Source</th>
-            <th>Received on (UTC)</th>
+            <th>Received (UTC)</th>
             <th>Temperature</th>
             <th>Humidity</th>
+            <th><button disabled={loading} onClick={fetchWeatherData} >Reload</button></th>
           </tr>
         </thead>
         <tbody>
           {Object.keys(data).map(key => {
             const row = data[key];
 
-            return <tr>
+            return <tr key={key}>
               <td>{row.Source}</td>
               <td>{row.ReceivedOn}</td>
               <td>{row.Temperature}°</td>
-              <td>{row.Humidity}%</td>
+              <td colSpan={2}>{row.Humidity}%</td>
             </tr>;
           }
           )}
         </tbody>
       </table>
-      : <div className="spinner"><img src="loader.gif" alt="Loading..." /></div>
     } </div>);
 }
 
