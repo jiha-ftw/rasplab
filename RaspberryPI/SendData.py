@@ -1,5 +1,4 @@
 import os
-import requests
 import Adafruit_DHT
 import paho.mqtt.publish as publish
 
@@ -12,6 +11,6 @@ publish.single(
 	hostname = os.getenv("RASPLAB_MOSQUITTO_SERVER_IP"),
 	auth = { 
 		"username": "mosquitto_user",
-		 "password": os.getenv("RASPLAB_MOSQUITTO_USER_PASSWORD") 
+		"password": os.getenv("RASPLAB_MOSQUITTO_USER_PASSWORD") 
 	}
 )
