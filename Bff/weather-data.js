@@ -24,6 +24,7 @@ client.on('connect', () => {
     });
 
     client.on('message', (topic, payload) => {
+        console.log('Recieved data on topic', topic, payload)
         const payloadJson = JSON.parse(payload);
         wData[payloadJson.Source] = payloadJson;
         console.log(wData);
