@@ -15,7 +15,10 @@ const App = () => {
       .finally(() => setLoading(false));
   };
 
-  useEffect(() => fetchWeatherData(), []);
+  useEffect(() => {
+    fetchWeatherData();
+    setInterval(() => fetchWeatherData(), 1000 * 600);
+  }, []);
 
   return (<div className="App">
     {loading || data === null
@@ -27,7 +30,6 @@ const App = () => {
             <th>Received (UTC)</th>
             <th>Temperature</th>
             <th>Humidity</th>
-            <th><button disabled={loading} onClick={fetchWeatherData} >Reload</button></th>
           </tr>
         </thead>
         <tbody>
@@ -38,7 +40,7 @@ const App = () => {
               <td>{row.Source}</td>
               <td>{row.ReceivedOn}</td>
               <td>{row.Temperature}°</td>
-              <td colSpan={2}>{row.Humidity}%</td>
+              <td>{row.Humidity}%</td>
             </tr>;
           }
           )}
