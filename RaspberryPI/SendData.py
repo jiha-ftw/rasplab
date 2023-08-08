@@ -22,8 +22,7 @@ GREEN_PIN = 19
 RED_PIN = 26
 SIGNAL_PIN = GREEN_PIN
 
-currtime = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M:%S")
-print(currtime)
+currtime = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M")
 
 if temperature is None:
 	SIGNAL_PIN = RED_PIN
