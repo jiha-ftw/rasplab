@@ -18,6 +18,7 @@ const App = () => {
         <thead>
           <tr>
             <th>Source</th>
+            <th>Received on (UTC)</th>
             <th>Temperature</th>
             <th>Humidity</th>
           </tr>
@@ -28,6 +29,7 @@ const App = () => {
 
             return <tr>
               <td>{row.Source}</td>
+              <td>{row.ReceivedOn}</td>
               <td>{row.Temperature}°</td>
               <td>{row.Humidity}%</td>
             </tr>;
