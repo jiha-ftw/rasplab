@@ -8,8 +8,8 @@ import paho.mqtt.publish as publish
 instance_id = os.getenv("RASPLAB_INSTANCE_IDENTIFIER")
 humidity, temperature = Adafruit_DHT.read_retry(Adafruit_DHT.DHT11, 4)
 
-GREEN_PIN = 19
-RED_PIN = 26
+GREEN_PIN = 27
+RED_PIN = 22
 SIGNAL_PIN = GREEN_PIN
 
 currtime = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M")
