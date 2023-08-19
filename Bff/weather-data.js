@@ -25,10 +25,10 @@ client.on('connect', () => {
     });
 
     client.on('message', (topic, payload) => {
-        console.log('Recieved data on topic', topic, payload)
+        console.log('Received data on topic', topic, payload)
         const payloadJson = JSON.parse(payload);
 
-        payloadJson.RecievedOn = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss', true);
+        payloadJson.ReceivedOn = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss', true);
         wData[payloadJson.Source] = payloadJson;
     });
 });
