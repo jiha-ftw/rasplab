@@ -1,5 +1,6 @@
 const mqtt = require('mqtt')
 const dotenv = require('dotenv');
+const date = require('date-and-time')
 dotenv.config();
 
 const clientId = `mqtt_${Math.random().toString(16).slice(3)}`
@@ -26,8 +27,9 @@ client.on('connect', () => {
     client.on('message', (topic, payload) => {
         console.log('Recieved data on topic', topic, payload)
         const payloadJson = JSON.parse(payload);
+
+        payloadJson.RecievedOn = date.format(new Date(), 'YYYY-MM-DD HH:mm:ss', true);
         wData[payloadJson.Source] = payloadJson;
-        console.log(wData);
     });
 });
 
