@@ -1,7 +1,6 @@
-from datetime import datetime, timezone
 import RPi.GPIO as GPIO
-import time
 import os
+import time
 import Adafruit_DHT
 import paho.mqtt.publish as publish
 
@@ -12,14 +11,12 @@ GREEN_PIN = 27
 RED_PIN = 22
 SIGNAL_PIN = GREEN_PIN
 
-currtime = datetime.now(timezone.utc).strftime("%Y-%m-%d %H:%M")
-
 if temperature is None:
 	SIGNAL_PIN = RED_PIN
 else:
 	publish.single(
 	        "mqtt/collect-temperature",
-	        f"{{ \"Source\": {instance_id}, \"Temperature\": {temperature}, \"Humidity\": {humidity}, \"ReceivedOn\": \"{currtime}\" }}",
+	        f"{{ \"Source\": {instance_id}, \"Temperature\": {temperature}, \"Humidity\": {humidity} }}",
 	        hostname = os.getenv("RASPLAB_MOSQUITTO_SERVER_IP"),
 	        auth = {
 	                "username": "mosquitto_user",
